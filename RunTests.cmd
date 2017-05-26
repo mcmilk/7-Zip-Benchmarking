@@ -1,7 +1,9 @@
 @echo off
 
 rem You need wtime.exe from here: https://github.com/mcmilk/wtime
-rem exit
+
+rem do not delete all .7z files of some user ;)
+exit
 
 del *.7z *.log
 set CMD=7z
