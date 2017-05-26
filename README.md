@@ -5,7 +5,7 @@ This is the Github Page of some testing utilities for creating benchmarks with s
 
 Here a small How To and what you will need:
 
-- a running windows system, for crating the benchmarks with [wtime](https://github.com/mcmilk/wtime)
+- a windows system, for creating the benchmarks with [wtime](https://github.com/mcmilk/wtime)
 - `RunTests.cmd` is an example on how I benchmark [7-Zip ZS](https://github.com/mcmilk/7-Zip-zstd/)
 - some linux box, for running `Logfile2csv.sh`
   - this script will generate `csv` files from the logfiles
