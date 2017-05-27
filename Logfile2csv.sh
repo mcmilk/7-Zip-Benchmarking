@@ -9,7 +9,7 @@
 # the calculated average values for the testings. This can be used to
 # create some nice diagrams...
 #
-# /TR 2015-05-26
+# /TR 2015-05-27
 ######################################################################
 
 function error() {
@@ -46,17 +46,16 @@ for logfile in *.log; do
   while read line; do
 
     # RunningTime = 1.622
-    if [[ $line =~ ^RunningTime ]]; then
-      x=${line#RunningTime = }
-      x=${x/./}
+    if [[ $line =~ ^RunningTime. ]]; then
+      x=${line#RunningTime.* }
       CTIME="$CTIME $x + "
       ctime=$((ctime+1))
       continue
     fi
 
     # PeakWorkingSetSize         = 7440
-    if [[ $line =~ ^PeakWorkingSetSize ]]; then
-      x=${line#PeakWorkingSetSize * = }
+    if [[ $line =~ ^PeakWorkingSetSize. ]]; then
+      x=${line#PeakWorkingSetSize.* }
       CMEM="$CMEM $x + "
       cmem=$((cmem+1))
       continue
@@ -79,17 +78,16 @@ for logfile in *.log; do
   while read line; do
 
     # RunningTime = 1.622
-    if [[ $line =~ ^RunningTime ]]; then
-      x=${line#RunningTime = }
-      x=${x/./}
+    if [[ $line =~ ^RunningTime. ]]; then
+      x=${line#RunningTime.* }
       DTIME="$DTIME $x + "
       dtime=$((dtime+1))
       continue
     fi
 
     # PeakWorkingSetSize         = 7440
-    if [[ $line =~ ^PeakWorkingSetSize ]]; then
-      x=${line#PeakWorkingSetSize * = }
+    if [[ $line =~ ^PeakWorkingSetSize. ]]; then
+      x=${line#PeakWorkingSetSize.* }
       DMEM="$DMEM $x + "
       dmem=$((dmem+1))
       continue
