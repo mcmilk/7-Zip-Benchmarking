@@ -2,7 +2,7 @@
 
 ######################################################################
 #
-# This script will check the logfiles, created by run-7zip.cmd
+# This script will check the logfiles, created by RunTests.cmd
 # on some Windows Machine...
 #
 # If everything is okay, the result will be a nice .csv file with
