@@ -9,7 +9,7 @@
 # the calculated average values for the testings. This can be used to
 # create some nice diagrams...
 #
-# /TR 2015-05-27
+# /TR 2017-06-04
 ######################################################################
 
 function error() {

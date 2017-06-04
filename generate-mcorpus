@@ -1,8 +1,12 @@
 #!/bin/sh
 
+######################################################################
 #
-# generate some own corpus, which is bigger then Silesia
+# This script will generate some own corpus, which is bigger then
+# Silesia.
 #
+# /TR 2017-06-04
+######################################################################
 
 U=""
 
