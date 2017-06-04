@@ -10,7 +10,7 @@ Here a small How To and what you will need:
 - some linux box, for running `Logfile2csv.sh`
   - this script will generate `csv` files from the logfiles
   - you can modify both scripts to fit you needs
-
+- `generate-mcorpus` will generate a 1,2 GiB testfile, which I used for the [7-Zip ZS](https://github.com/mcmilk/7-Zip-zstd/) site
 
 ## Donate
 
