@@ -108,3 +108,5 @@ goto %NEXT%
 
 7z a tests.7z *.log
 
+REM appveyor exit
+
