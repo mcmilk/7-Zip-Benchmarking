@@ -1,4 +1,5 @@
 
+appveyor AddMessage "Creating cache ..."
 if not exist tests mkdir tests
 if not exist cache mkdir cache
 cd cache
@@ -6,4 +7,10 @@ if not exist wtime.exe      curl -fsS -o wtime.exe      https://github.com/mcmil
 if not exist mcorpus.tar.gz curl -fsS -o mcorpus.tar.gz https://pix.mcmilk.de/7z-tests/mcorpus.tar.gz
 
 cd ../tests
+appveyor AddMessage "Loading mcorpus.tar from cache ..."
 7z x cache/mcorpus.tar.gz mcorpus.tar
+
+appveyor AddMessage "Loading 7z.exe from mcmilk.de ..."
+curl -fsS -o 7z.exe https://pix.mcmilk.de/7z-tests/7z.exe
+curl -fsS -o 7z.dll https://pix.mcmilk.de/7z-tests/7z.dll
+
