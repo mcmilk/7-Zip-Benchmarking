@@ -93,7 +93,7 @@ rem test function
 for /L %%N IN (%LSTART%, %LSTEP%, %LEND%) DO (
  for /L %%M IN (1, 1, %CRUNS%) DO (
   del %METHOD%_mx*.7z >NUL
-  appveyor AddTest "Testing %CMD% %METHOD% ..."
+  appveyor AddTest -Name "Testing %CMD% %METHOD%"
   wtime %CMD% a %METHOD%_mx%%N.7z -m0=%METHOD% %CPARAMS% -mx%%N %FILES% 2>>%METHOD%_mx%%N.log
   for %%F in (%METHOD%_mx%%N.7z) do echo Size = %%~zF >>%METHOD%_mx%%N.log
  )
