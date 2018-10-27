@@ -1,5 +1,8 @@
 #!/bin/bash
 
+rm *.log
+zcat cache/mcorpus.tar.gz > mcorpus.tar
+
 cparam="-ms=on -mmt=4"
 dparam="-mmt=4"
 
@@ -10,3 +13,5 @@ for l in `seq 1 22`; do
   wtime 7z t test.7z $dparam 2>>${m}_mx${l}_d.log
   rm -f test.7z
 done
+
+7z a logs.7z *.log
