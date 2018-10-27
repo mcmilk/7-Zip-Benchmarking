@@ -1,4 +1,12 @@
+#!/bin/bash
 
-for l in 1 2 3 4 5 6 7 8 9; do
-  echo 7z -m0=zstd -mx$l lala.tar tatatat
+cparam="-ms=on -mmt=4"
+dparam="-mmt=4"
+
+m="zstd"
+for l in `seq 1 22`; do
+  echo wtime 7z a test.7z -mm=$m -ms=on -mmt=4 -mx$l mcorpus.tar 2>>$m_mx$l.log
+  wtime 7z a test.7z $cparam -mm=$m -mx$l mcorpus.tar 2>>${m}_mx${l}_c.log
+  wtime 7z t test.7z $dparam 2>>${m}_mx${l}_d.log
+  rm -f test.7z
 done
