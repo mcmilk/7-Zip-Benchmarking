@@ -1,4 +1,4 @@
-@echo off
+@echo on
 rem You need wtime.exe from here: https://github.com/mcmilk/wtime
 
 dir
@@ -93,7 +93,7 @@ rem test function
 for /L %%N IN (%LSTART%, %LSTEP%, %LEND%) DO (
  for /L %%M IN (1, 1, %CRUNS%) DO (
   del %METHOD%_mx*.7z >NUL
-  appveyor AddTest -Name "Testing %CMD% %METHOD%"
+  echo wtime %CMD% a %METHOD%_mx%%N.7z -m0=%METHOD% %CPARAMS% -mx%%N %FILES% 2>>%METHOD%_mx%%N.log
   wtime %CMD% a %METHOD%_mx%%N.7z -m0=%METHOD% %CPARAMS% -mx%%N %FILES% 2>>%METHOD%_mx%%N.log
   for %%F in (%METHOD%_mx%%N.7z) do echo Size = %%~zF >>%METHOD%_mx%%N.log
  )
