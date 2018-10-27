@@ -1,7 +1,7 @@
 @echo on
 rem You need wtime.exe from here: https://github.com/mcmilk/wtime
 
-del *.log >NUL
+2121del *.log >NUL
 set CMD=7z
 set CPARAMS=-ms=on -mmt=4
 set DPARAMS=-mmt=4
