@@ -1,5 +1,5 @@
 
-appveyor AddMessage "Creating cache ..."
+appveyor AddMessage "Creating cache (%APPVEYOR_BUILD_FOLDER%\tests\cache) ..."
 if not exist tests mkdir tests
 if not exist cache mkdir cache
 cd cache
@@ -13,4 +13,6 @@ appveyor AddMessage "Loading mcorpus.tar from cache ..."
 appveyor AddMessage "Loading 7z.exe from mcmilk.de ..."
 curl -fsS -o 7z.exe https://pix.mcmilk.de/7z-tests/7z.exe
 curl -fsS -o 7z.dll https://pix.mcmilk.de/7z-tests/7z.dll
+
+dir
 
