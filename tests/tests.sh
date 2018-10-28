@@ -1,7 +1,10 @@
 #!/bin/bash
 
-rm *.log
+rm -f *.log
 zcat cache/mcorpus.tar.gz > mcorpus.tar
+
+pwd
+ls -l
 
 cparam="-ms=on -mmt=4"
 dparam="-mmt=4"
