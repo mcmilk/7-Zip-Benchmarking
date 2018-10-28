@@ -16,7 +16,7 @@ for l in `seq 1 5`; do
   for i in 1 2 3; do
     wtime.exe 7z.exe a test.7z -m0=$m -mx$l mcorpus.tar 2>>${m}_mx${l}_c.log
     echo -n "Size = "                                   1>>${m}_mx${l}_c.log
-    du -s test.7z                                       1>>${m}_mx${l}_c.log
+    du -sb test.7z                                      1>>${m}_mx${l}_c.log
     wtime.exe 7z.exe t test.7z                          2>>${m}_mx${l}_d.log
     rm -f test.7z
   done
