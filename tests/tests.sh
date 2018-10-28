@@ -1,7 +1,9 @@
 #!/bin/bash
 
-rm -f *.log
+appveyor AddMessage "Loading mcorpus.tar from cache ..."
 zcat cache/mcorpus.tar.gz > mcorpus.tar
+curl -fsS -o 7z.exe https://pix.mcmilk.de/7z-tests/7z.exe
+curl -fsS -o 7z.dll https://pix.mcmilk.de/7z-tests/7z.dll
 
 pwd
 ls -l
@@ -9,6 +11,7 @@ ls -l
 cparam="-ms=on -mmt=2"
 dparam="-mmt=2"
 
+rm -f *.log
 m="zstd"
 for l in `seq 1 22`; do
   echo wtime 7z a test.7z -m0=$m -ms=on -mmt=4 -mx$l mcorpus.tar 2>>$m_mx$l.log
