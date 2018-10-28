@@ -2,9 +2,9 @@
 
 appveyor AddMessage "Loading mcorpus.tar from cache ..."
 zcat cache/mcorpus.tar.gz > mcorpus.tar
+cp cache/wtime.exe .
 curl -fsS -o 7z.exe https://pix.mcmilk.de/7z-tests/7z.exe
 curl -fsS -o 7z.dll https://pix.mcmilk.de/7z-tests/7z.dll
-
 pwd
 ls -l
 
