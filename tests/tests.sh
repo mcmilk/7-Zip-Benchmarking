@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export PATH=".:$PATH"
+
 appveyor AddMessage "Loading mcorpus.tar from cache ..."
 zcat cache/mcorpus.tar.gz > mcorpus.tar
 cp cache/wtime.exe .
@@ -15,8 +17,8 @@ rm -f *.log
 m="zstd"
 for l in `seq 1 22`; do
   echo wtime 7z a test.7z -m0=$m -ms=on -mmt=4 -mx$l mcorpus.tar 2>>$m_mx$l.log
-  ./wtime 7z.exe a test.7z $cparam -m0=$m -mx$l mcorpus.tar 2>>${m}_mx${l}_c.log
-  ./wtime 7z.exe t test.7z $dparam 2>>${m}_mx${l}_d.log
+  wtime.exe 7z.exe a test.7z $cparam -m0=$m -mx$l mcorpus.tar 2>>${m}_mx${l}_c.log
+  wtime.exe 7z.exe t test.7z $dparam 2>>${m}_mx${l}_d.log
   rm -f test.7z
 done
 
