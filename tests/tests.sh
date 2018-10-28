@@ -9,16 +9,17 @@ curl -fsS -o 7z.dll https://pix.mcmilk.de/7z-tests/7z.dll
 pwd
 ls -l
 
-cparam="-ms=on -mmt=2"
-dparam="-mmt=2"
-
 rm -f *.log
 m="zstd"
-for l in `seq 1 3`; do
-  echo wtime 7z a test.7z -m0=$m -ms=on -mmt=4 -mx$l mcorpus.tar 2>>$m_mx$l.log
-  wtime.exe 7z.exe a test.7z $cparam -m0=$m -mx$l mcorpus.tar 2>>${m}_mx${l}_c.log
-  wtime.exe 7z.exe t test.7z $dparam 2>>${m}_mx${l}_d.log
-  rm -f test.7z
+for l in `seq 1 5`; do
+  echo wtime 7z a test.7z -m0=$m -mx$l mcorpus.tar
+  for i in 1 2 3; do
+    wtime.exe 7z.exe a test.7z -m0=$m -mx$l mcorpus.tar 2>>${m}_mx${l}_c.log
+    echo -n "Size = "                                   2>>${m}_mx${l}_c.log
+    du -s test.7z                                       2>>${m}_mx${l}_c.log
+    wtime.exe 7z.exe t test.7z                          2>>${m}_mx${l}_d.log
+    rm -f test.7z
+  done
 done
 
 7z a ../logs.7z *.log
