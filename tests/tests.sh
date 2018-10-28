@@ -11,7 +11,7 @@ ls -l
 
 rm -f *.log
 m="zstd"
-for l in `seq 1 5`; do
+for l in 1 3 5 7 9 11 15 17; do
   echo wtime 7z a test.7z -m0=$m -mx$l mcorpus.tar
   for i in 1 2 3; do
     wtime.exe 7z.exe a test.7z -m0=$m -mx$l mcorpus.tar 2>>${m}_mx${l}_c.log
