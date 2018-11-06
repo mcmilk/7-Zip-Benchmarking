@@ -9,6 +9,9 @@ curl -fsS -o 7z.dll https://pix.mcmilk.de/7z-tests/7z.dll
 pwd
 ls -l
 
+echo find / -name "cl.exe"
+find / -name "cl.exe"
+
 rm -f *.log
 m="zstd"
 for l in `seq 1 20`; do
