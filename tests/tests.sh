@@ -6,17 +6,12 @@ appveyor AddMessage "Loading mcorpus.tar from cache ..."
 zcat cache/mcorpus.tar.gz > mcorpus.tar
 curl -fsS -o 7z.exe https://pix.mcmilk.de/7z-tests/7z.exe
 curl -fsS -o 7z.dll https://pix.mcmilk.de/7z-tests/7z.dll
-pwd
-ls -l
-
-echo find / -name "cl.exe"
-find / -name "cl.exe"
 
 rm -f *.log
 m="zstd"
 for l in `seq 1 20`; do
-  echo wtime 7z a test.7z -mmt=1 -m0=$m -mx$l mcorpus.tar
   for i in 1; do
+    echo wtime 7z a test.7z -mmt=1 -m0=$m -mx$l mcorpus.tar
     wtime.exe 7z.exe a test.7z -m0=$m -mx$l mcorpus.tar 2>>${m}_mx${l}_c.log
     echo -n "Size = "                                   1>>${m}_mx${l}_c.log
     du -sb test.7z                                      1>>${m}_mx${l}_c.log
