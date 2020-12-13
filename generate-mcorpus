@@ -1,22 +1,20 @@
 #!/bin/sh
 
-######################################################################
+###########################################################################
+# This script will generate some own corpus, which is bigger then Silesia.
 #
-# This script will generate some own corpus, which is bigger then
-# Silesia.
-#
-# /TR 2017-06-04
-######################################################################
-
+# ctime: /TR 2017-06-04
+# mtime: /TR 2020-12-13 (chromium replaced by firefox)
+###########################################################################
 U=""
 
 # Silesia compression corpus
 # type: various
 U="$U http://sun.aei.polsl.pl/~sdeor/corpus/silesia.zip"
 
-# Chromium v60
+# Firefox 83.0
 # type: binary
-U="$U https://github.com/henrypp/chromium/releases/download/v60.0.3073.0-r464874-win32/chromium-sync.zip"
+U="$U https://ftp.mozilla.org/pub/firefox/releases/83.0/linux-x86_64/en-GB/firefox-83.0.tar.bz2"
 
 # Wikipedia stuff / documentation
 # type: multimedia
@@ -26,9 +24,9 @@ U="$U https://dumps.wikimedia.org/archive/2002/2002-04-18/vikio-docs.tar.gz"
 # type: sql
 U="$U https://dumps.wikimedia.org/archive/2002/2002-04-18/wikipedia_dump_20020321.sql.gz"
 
-# Linux Kernel v2.6.0
+# Linux Kernel v3.0.1
 # type: text/code
-U="$U https://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.0.tar.xz"
+U="$U https://mirrors.edge.kernel.org/pub/linux/kernel/v3.0/linux-3.0.1.tar.bz2"
 
 # International Human Genome Project, chromosome #1
 # type: text/dna
@@ -38,27 +36,38 @@ U="$U http://hgdownload.cse.ucsc.edu/goldenPath/hg18/chromosomes/chr1.fa.gz"
 # type: text/urls
 U="$U http://s3-us-west-1.amazonaws.com/umbrella-static/top-1m-2017-03-08.csv.zip"
 
+# English Wikipedia dump - enwik8.zip
+# type: text/articles
+U="$U https://cs.fit.edu/~mmahoney/compression/enwik8.zip"
+
 # download corpus content
 for url in $U; do
   F=`basename $url`
   test -f "$F" || wget "$url"
 done
 
-# build some nice tar, which can be used as single file on windows for testing
-rm -rf mcorpus
+# cleanup
+rm -rf mcorpus mcorpus.bin
 mkdir mcorpus || exit
 cd mcorpus
+
+echo "Decompressing..."
 unzip ../top-1m-2017-03-08.csv.zip
 unzip ../silesia.zip
-unzip ../chromium-sync.zip
+unzip ../enwik8.zip
 zcat ../chr1.fa.gz > chr1.fa
 zcat ../vikio-docs.tar.gz | tar x
 zcat ../wikipedia_dump_20020321.sql.gz > wikipedia_dump_20020321.sql
-xzcat ../linux-2.6.0.tar.xz | tar x
-find linux-2.6.0 -type f -exec cat {} > linux \;
-rm -rf linux-2.6.0
+bzcat ../firefox-83.0.tar.bz2 | tar x
+bzcat ../linux-3.0.1.tar.bz2 | tar x
+
+# build one single file with different and unsorted content types
+# -> can be used for testing / benchmarking archivers
+# /TR 2020-12-13
+
+echo "Putting together into single file mcorpus.bin ..."
+find . -type f -print0 | sort -z | xargs -r0 cat >> ../mcorpus.bin
 cd ..
 
-# name: mcorpus.tar
-# bytes: 1249361920
-tar cvf mcorpus.tar mcorpus
+# name: mcorpus.bin
+# bytes: 1657442978
