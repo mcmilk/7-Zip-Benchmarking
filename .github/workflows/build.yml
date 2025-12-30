@@ -1,0 +1,20 @@
+
+name: Run Tests
+on: [push, pull_request]
+
+jobs:
+  linux-x64:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+    - name: Run tests
+      run: |
+        cd linux
+        ./runtests.sh
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v6
+      with:
+        path: |
+          ${{ github.workspace }}/linux/*.txt
+          ${{ github.workspace }}/linux/*.log
+        name: linux-logs

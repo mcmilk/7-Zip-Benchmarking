@@ -1,0 +1,47 @@
+#!/bin/sh
+
+###########################################################################
+# This script will generate an own corpus which contains:
+# - Silesia compression corpus
+# - the enwik8 corpus of the Large Text Compression Benchmark
+# - chromosome #1 of the International Human Genome Project
+#
+# ctime: /TR 2025-12-31
+###########################################################################
+U=""
+
+# Silesia compression corpus
+# type: various
+U="$U http://sun.aei.polsl.pl/~sdeor/corpus/silesia.zip"
+
+# enwik8.zip, 100MB english text
+# type: text/articles
+U="$U https://mattmahoney.net/dc/enwik8.zip"
+
+# International Human Genome Project, chromosome #1
+# type: text/dna
+U="$U http://hgdownload.cse.ucsc.edu/goldenPath/hg18/chromosomes/chr1.fa.gz"
+
+# download corpus content
+for url in $U; do
+  F=`basename $url`
+  test -f "$F" || wget "$url"
+done
+
+# cleanup
+rm -rf mcorpus mcorpus.bin
+mkdir mcorpus || exit
+cd mcorpus
+
+echo "Decompressing..."
+unzip ../silesia.zip
+unzip ../enwik8.zip
+zcat ../chr1.fa.gz > chr1.fa
+
+# build one single file with different and unsorted content types
+# -> can be used for testing / benchmarking archivers
+# /TR 2020-12-13
+
+echo "Putting together into single file mcorpus.bin ..."
+find . -type f -print0 | sort -z | xargs -r0 cat >> ../mcorpus.bin
+cd ..
