@@ -15,14 +15,13 @@ Here a small Howto and what you will need:
 ## Overview of the data within [mcorpus.bin](https://github.com/mcmilk/7-Zip-Benchmarking/releases/download/v0.1/mcorpus.bin.zst)
 
 - Silesia compression corpus
-- International Human Genome Project, chromosome #1
-- enwik8, 100 MB text file used in the Large Text Compression Benchmark
+- enwik8, 100 MB text file used in the [Large Text Compression Benchmark](https://www.mattmahoney.net/dc/text.html)
 
 ## Checksums of mcorpus
 
 | Binary | Description |
 |--------|-------------|
-| size   | 564133300 bytes |
-| md5    | 2363a38a6e48ae6bc7a96bf16f9554f7 |
-| xxh128 | d9495d16423bfba8a8f7d2b5e83138f0 |
-| sha256 | 5744f9f7079602e20076595bff917740dce67cf5e4dc513b5d20c99b5fda9ecf |
+| size   | 311.938.580 bytes |
+| md5    | f3b90f9a877e96a05202e6c4ea2a7d20 |
+| xxh128 | 1c3e45f35607f128dfe4f1f9cbb3f8c2 |
+| sha256 | c6fc104b0d038225a20195716a337565136bf938977af02deab98a985f8fc55e |

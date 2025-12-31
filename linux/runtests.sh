@@ -4,9 +4,9 @@ TIME="/usr/bin/mtime"
 FILE="testfile.bin"
 
 function prepare() {
-  wget -q https://github.com/mcmilk/7-Zip-Benchmarking/releases/download/v0.1/mcorpus.bin.zst
-  zstd -d --rm mcorpus.bin.zst
-  mv -f mcorpus.bin $FILE
+  wget -q https://github.com/mcmilk/7-Zip-Benchmarking/releases/download/v0.1/silesia.zst
+  zstd -d --rm silesia.zst
+  mv -f silesia $FILE
 
   # 7zz -> 7-Zip ZS
   # - take 7-Zip ZS release later
@@ -25,10 +25,22 @@ function prepare() {
 }
 
 function doit() {
+  method="$1"
+  start=$2
+  end=$3
   m="$1"
 
+  # lizard is special
+  case "$m" in
+    lizardM1) m=lizard; start=10; end=19; ;;
+    lizardM2) m=lizard; start=20; end=29; ;;
+    lizardM3) m=lizard; start=30; end=39; ;;
+    lizardM4) m=lizard; start=40; end=49; ;;
+  esac
+
   echo "##[group]Benchmark $m"
-  for l in `seq $2 $3`; do
+  x=1
+  for l in `seq $start $end`; do
     archive="$m-mx$l.7z"
     # %m => elapsed real time in milliseconds
     # %M => maximum resident set size in K
@@ -37,13 +49,14 @@ function doit() {
     size=$(stat --format=%s $archive)
     ctime=$(cat clog)
     dtime=$(cat dlog)
-    echo "$m;$l;$ctime;$size;$dtime" >> $m.log
+    echo "$method;$x;$ctime;$size;$dtime" >> $method.log
+    x=$((x+1))
     rm -f $archive clog dlog
   done
   echo "##[endgroup]"
 
   echo "##[group]Results $m"
-  cat $m.log
+  cat $method.log
   echo "##[endgroup]"
 }
 
@@ -53,12 +66,12 @@ function hashtest() {
     $TIME -q -o time.log -f "%m;%M" 7zz h -scrc$h $FILE $FILE
     time=$(cat time.log)
     rm -f time.log
-    echo "$h;$time" >> hashes.log
+    echo "$h;$time" >> hashes.csv
     echo "##[endgroup]"
   done
 
   echo "##[group]Hashes Results"
-  cat hashes.log
+  cat hashes.csv
   echo "##[endgroup]"
 }
 
@@ -74,18 +87,23 @@ hashtest \
 
 # additional
 doit lz4      1 12
-doit lz5      1 15
 doit zstd     1 22
 doit brotli   1 11
-doit lizard  10 19
-doit lizard  20 29
-doit lizard  30 39
-doit lizard  40 49
 doit flzma2   1  9
 
 # std
-doit bzip2    1  9
 doit deflate  1  9
+doit bzip2    1  9
 doit lzma     1  9
 doit lzma2    1  9
 doit ppmd     1  9
+
+# not used much
+doit lz5      1 15
+doit lizardM1 1  9
+doit lizardM2 1  9
+doit lizardM3 1  9
+doit lizardM4 1  9
+
+# all in one csv file
+cat *.log > results.csv

@@ -16,11 +16,7 @@ U="$U http://sun.aei.polsl.pl/~sdeor/corpus/silesia.zip"
 
 # enwik8.zip, 100MB english text
 # type: text/articles
-U="$U https://mattmahoney.net/dc/enwik8.zip"
-
-# International Human Genome Project, chromosome #1
-# type: text/dna
-U="$U http://hgdownload.cse.ucsc.edu/goldenPath/hg18/chromosomes/chr1.fa.gz"
+# U="$U https://mattmahoney.net/dc/enwik8.zip"
 
 # download corpus content
 for url in $U; do
@@ -35,13 +31,9 @@ cd mcorpus
 
 echo "Decompressing..."
 unzip ../silesia.zip
-unzip ../enwik8.zip
-zcat ../chr1.fa.gz > chr1.fa
+#unzip ../enwik8.zip
 
-# build one single file with different and unsorted content types
-# -> can be used for testing / benchmarking archivers
-# /TR 2020-12-13
-
-echo "Putting together into single file mcorpus.bin ..."
+# build one single file
+echo "Putting the data together to mcorpus.bin..."
 find . -type f -print0 | sort -z | xargs -r0 cat >> ../mcorpus.bin
 cd ..
