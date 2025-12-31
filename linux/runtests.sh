@@ -18,6 +18,8 @@ function prepare() {
   sudo install -m 755 mtime /usr/bin
   rm -f mtime
 
+  # store information about system and 7-Zip version
+  7zz i | tee 7zip.txt
   lscpu | tee lscpu.txt
   lsmem | tee lsmem.txt
 }
