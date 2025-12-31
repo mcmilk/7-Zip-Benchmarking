@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TIME="/usr/bin/time"
+TIME="/usr/bin/mtime"
 FILE="testfile.bin"
 
 function prepare() {
@@ -14,6 +14,10 @@ function prepare() {
   unzip linux-x64 7zz
   sudo mv -f ./7zz /usr/bin
 
+  wget -q https://github.com/mcmilk/7-Zip-Benchmarking/releases/download/v0.1/mtime
+  sudo install -m 755 mtime /usr/bin
+  rm -f mtime
+
   lscpu > lscpu.txt
   lsmem > lsmem.txt
 }
@@ -22,8 +26,10 @@ function doit() {
   m="$1"
   for l in `seq $2 $3`; do
     archive="$m-mx$l.7z"
-    $TIME -q -o clog -f "%e;%M" 7zz a $archive -m0=$m -mx$l -mmt=1 $FILE
-    $TIME -q -o dlog -f "%e;%M" 7zz t $archive -mmt=1
+    # %m => elapsed real time in milliseconds
+    # %M => maximum resident set size in K
+    $TIME -q -o clog -f "%m;%M" 7zz a $archive -m0=$m -mx$l -mmt=1 $FILE
+    $TIME -q -o dlog -f "%m;%M" 7zz t $archive -mmt=1
     size=$(stat --format=%s $archive)
     ctime=$(cat clog)
     dtime=$(cat dlog)
@@ -34,7 +40,7 @@ function doit() {
 
 function hashtest() {
   for h in $@; do
-    $TIME -q -o time.log -f "%e;%M" 7zz h -scrc$h $FILE $FILE
+    $TIME -q -o time.log -f "%m;%M" 7zz h -scrc$h $FILE $FILE
     time=$(cat time.log)
     rm -f time.log
     echo "$h;$time" >> hashes.log

@@ -1,0 +1,14 @@
+diff -urN time-1.9/src/time.c time-1.9.tr/src/time.c
+--- time-1.9/src/time.c	2018-03-07 08:29:13.000000000 +0100
++++ time-1.9.tr/src/time.c	2025-12-31 10:58:53.376465745 +0100
+@@ -554,6 +554,10 @@
+ 		       (long int)resp->elapsed.tv_sec,
+ 		       (long int)(resp->elapsed.tv_usec / 10000));
+ 	      break;
++	    case 'm':		/* Elapsed real time in milliseconds.  */
++	      fprintf (fp, "%lu",
++		       (long unsigned)resp->elapsed.tv_sec*1000 + resp->elapsed.tv_usec/1000);
++              break;
+ 	    case 'k':		/* Signals delivered.  */
+ 	      fprintf (fp, "%ld", resp->ru.ru_nsignals);
+ 	      break;
