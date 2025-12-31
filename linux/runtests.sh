@@ -18,12 +18,14 @@ function prepare() {
   sudo install -m 755 mtime /usr/bin
   rm -f mtime
 
-  lscpu > lscpu.txt
-  lsmem > lsmem.txt
+  lscpu | tee lscpu.txt
+  lsmem | tee lsmem.txt
 }
 
 function doit() {
   m="$1"
+
+  echo "##[group]Benchmark $m"
   for l in `seq $2 $3`; do
     archive="$m-mx$l.7z"
     # %m => elapsed real time in milliseconds
@@ -36,15 +38,26 @@ function doit() {
     echo "$m;$l;$ctime;$size;$dtime" >> $m.log
     rm -f $archive clog dlog
   done
+  echo "##[endgroup]"
+
+  echo "##[group]Results $m"
+  cat $m.log
+  echo "##[endgroup]"
 }
 
 function hashtest() {
   for h in $@; do
+    echo "##[group]Hash $h"
     $TIME -q -o time.log -f "%m;%M" 7zz h -scrc$h $FILE $FILE
     time=$(cat time.log)
     rm -f time.log
     echo "$h;$time" >> hashes.log
+    echo "##[endgroup]"
   done
+
+  echo "##[group]Hashes Results"
+  cat hashes.log
+  echo "##[endgroup]"
 }
 
 prepare
