@@ -3,27 +3,6 @@
 TIME="/usr/bin/mtime"
 FILE="testfile.bin"
 
-function prepare() {
-  wget -q https://github.com/mcmilk/7-Zip-Benchmarking/releases/download/v0.1/silesia.zst
-  zstd -d --rm silesia.zst
-  mv -f silesia $FILE
-
-  # 7zz -> 7-Zip ZS
-  # - take 7-Zip ZS release later
-  wget -q https://github.com/mcmilk/7-Zip-Benchmarking/releases/download/v0.1/linux-x64.zip
-  unzip linux-x64 7zz
-  sudo mv -f ./7zz /usr/bin
-
-  wget -q https://github.com/mcmilk/7-Zip-Benchmarking/releases/download/v0.1/mtime
-  sudo install -m 755 mtime /usr/bin
-  rm -f mtime
-
-  # store information about system and 7-Zip version
-  7zz i | tee 7zip.txt
-  lscpu | tee lscpu.txt
-  lsmem | tee lsmem.txt
-}
-
 function doit() {
   method="$1"
   start=$2
@@ -74,8 +53,6 @@ function hashtest() {
   cat hashes.csv
   echo "##[endgroup]"
 }
-
-prepare
 
 hashtest \
   CRC32 CRC64 \

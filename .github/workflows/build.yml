@@ -4,9 +4,35 @@ on: [push, pull_request]
 
 jobs:
   linux-x64:
+    name: Linux Tests
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
+    - name: CPU Information
+      run: lscpu
+    - name: Memory Information
+      run: lsmem
+    - name: Prepare Tests
+      run: |
+        wget https://github.com/mcmilk/7-Zip-Benchmarking/releases/download/v0.1/silesia.zst
+        zstd -d --rm silesia.zst
+        mv -f silesia linux/testfile.bin
+
+        # 7zz -> 7-Zip ZS (take 7-Zip ZS release later)
+        wget -q https://github.com/mcmilk/7-Zip-Benchmarking/releases/download/v0.1/linux-x64.zip
+        unzip linux-x64 7zz
+        sudo install -m 755 7zz /usr/bin
+
+        wget https://github.com/mcmilk/7-Zip-Benchmarking/releases/download/v0.1/mtime
+        sudo install -m 755 mtime /usr/bin
+        rm -f mtime 7zz
+
+        # store information about system and 7-Zip version
+        7zz i > 7zip.txt
+        lscpu > lscpu.txt
+        lsmem > lsmem.txt
+    - name: 7-Zip Information
+      run: 7zz i
     - name: Run tests
       run: |
         cd linux
