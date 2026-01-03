@@ -14,21 +14,19 @@ set boxdepth 0.8
 set boxwidth 0.5 absolute
 set xyplane at 0
 
-# fixed colors for each method
-set style line  1 lc rgb "dark-red"        # Ppmd
-set style line  2 lc rgb "dark-chartreuse" # LZMA2
-set style line  3 lc rgb "navy"            # Bzip2
-set style line  4 lc rgb "dark-orange"     # Deflate
-set style line  5 lc rgb "goldenrod"       # Brotli
-set style line  6 lc rgb "coral"           # FLZMA2
-set style line  7 lc rgb "royalblue"       # Zstandard
-set style line  8 lc rgb "red"             # LZ4
-set style line  9 lc rgb "brown4"          # LZ5
-set style line 10 lc rgb "dark-violet"     # Lizard-M1
-set style line 11 lc rgb "green"           # Lizard-M2
-set style line 12 lc rgb "orange"          # Lizard-M3
-set style line 13 lc rgb "midnight-blue"   # Lizard-M4
-set style line 14 lc rgb "gray80"          # LZMA
+set style line  1 pt 5 lc rgb "dark-red"     # Ppmd
+set style line  2 pt 5 lc rgb "dark-green"   # LZMA2
+set style line  3 pt 5 lc rgb "orchid"       # Bzip2
+set style line  4 pt 7 lc rgb "web-green"    # Deflate
+set style line  5 pt 7 lc rgb "gold"         # Brotli
+set style line  6 pt 7 lc rgb "coral"        # FLZMA2
+set style line  7 pt 7 lc rgb "royalblue"    # Zstandard
+set style line  8 pt 8 lc rgb "light-coral"  # LZ4
+set style line  9 pt 7 lc rgb "antiquewhite" # LZ5
+set style line 10 pt 8 lc rgb "dark-violet"  # Lizard-M1
+set style line 11 pt 8 lc rgb "turquoise"    # Lizard-M2
+set style line 12 pt 8 lc rgb "orange"       # Lizard-M3
+set style line 13 pt 8 lc rgb "dark-khaki"   # Lizard-M4
 
 uncompressed = 311938580
 MiB = uncompressed / 1024 / 1024
@@ -94,8 +92,8 @@ splot \
   "lz5.log"      using (7):2:(MiB/($6/1024)) with boxes ls 9 title "LZ5 1.5", \
   "brotli.log"   using (8):2:(MiB/($6/1024)) with boxes ls 5 title "Brotli 1.2.0", \
   "deflate.log"  using (9):2:(MiB/($6/1024)) with boxes ls 4 title "7z Deflate", \
-  "flzma2.log"   using (10):2:(MiB/($6/1024)) with boxes ls 6 title "FLZMA2 1.0.1", \
-  "lzma2.log"    using (11):2:(MiB/($6/1024)) with boxes ls 2 title "7z LZMA2", \
+  "lzma2.log"    using (10):2:(MiB/($6/1024)) with boxes ls 2 title "7z LZMA2", \
+  "flzma2.log"   using (11):2:(MiB/($6/1024)) with boxes ls 6 title "FLZMA2 1.0.1", \
   "bzip2.log"    using (12):2:(MiB/($6/1024)) with boxes ls 3 title "7z Bzip2", \
   "ppmd.log"     using (13):2:(MiB/($6/1024)) with boxes ls 1 title "7z Ppmd", \
 
@@ -112,11 +110,11 @@ splot \
   "ppmd.log"     using (3):2:($4/1024) with boxes ls 1 title "7z Ppmd", \
   "brotli.log"   using (4):2:($4/1024) with boxes ls 5 title "Brotli 1.2.0", \
   "lz5.log"      using (5):2:($4/1024) with boxes ls 9 title "LZ5 1.5", \
-  "zstd.log"     using (6):2:($4/1024) with boxes ls 7 title "Zstandard 1.5.7", \
-  "lizardM2.log" using (7):2:($4/1024) with boxes ls 11 title "Lizard-M2 2.1", \
-  "lizardM3.log" using (8):2:($4/1024) with boxes ls 12 title "Lizard-M3 2.1", \
+  "lizardM2.log" using (6):2:($4/1024) with boxes ls 11 title "Lizard-M2 2.1", \
+  "lizardM4.log" using (7):2:($4/1024) with boxes ls 13 title "Lizard-M4 2.1", \
+  "zstd.log"     using (8):2:($4/1024) with boxes ls 7 title "Zstandard 1.5.7", \
   "lizardM1.log" using (9):2:($4/1024) with boxes ls 10 title "Lizard-M1 2.1", \
-  "lizardM4.log" using (10):2:($4/1024) with boxes ls 13 title "Lizard-M4 2.1", \
+  "lizardM3.log" using (10):2:($4/1024) with boxes ls 12 title "Lizard-M3 2.1", \
   "bzip2.log"    using (11):2:($4/1024) with boxes ls 3 title "7z Bzip2", \
   "deflate.log"  using (12):2:($4/1024) with boxes ls 4 title "7z Deflate", \
   "lz4.log"      using (13):2:($4/1024) with boxes ls 8 title "LZ4 1.10", \
@@ -130,12 +128,12 @@ splot \
   "lzma2.log"    using (2):2:($7/1024) with boxes ls 2 title "7z LZMA2", \
   "flzma2.log"   using (3):2:($7/1024) with boxes ls 6 title "FLZMA2 1.0.1", \
   "brotli.log"   using (4):2:($7/1024) with boxes ls 5 title "Brotli 1.2.0", \
-  "zstd.log"     using (5):2:($7/1024) with boxes ls 7 title "Zstandard 1.5.7", \
-  "bzip2.log"    using (6):2:($7/1024) with boxes ls 3 title "7z Bzip2", \
-  "lz5.log"      using (7):2:($7/1024) with boxes ls 9 title "LZ5 1.5", \
+  "lz5.log"      using (5):2:($7/1024) with boxes ls 9 title "LZ5 1.5", \
+  "lizardM2.log" using (6):2:($7/1024) with boxes ls 11 title "Lizard-M2 2.1", \
+  "lizardM4.log" using (7):2:($7/1024) with boxes ls 13 title "Lizard-M4 2.1", \
   "lizardM1.log" using (8):2:($7/1024) with boxes ls 10 title "Lizard-M1 2.1", \
-  "lizardM2.log" using (9):2:($7/1024) with boxes ls 11 title "Lizard-M2 2.1", \
-  "lizardM3.log" using (10):2:($7/1024) with boxes ls 12 title "Lizard-M3 2.1", \
-  "lizardM4.log" using (11):2:($7/1024) with boxes ls 13 title "Lizard-M4 2.1", \
+  "lizardM3.log" using (9):2:($7/1024) with boxes ls 12 title "Lizard-M3 2.1", \
+  "bzip2.log"    using (10):2:($7/1024) with boxes ls 3 title "7z Bzip2", \
+  "zstd.log"     using (11):2:($7/1024) with boxes ls 7 title "Zstandard 1.5.7", \
   "deflate.log"  using (12):2:($7/1024) with boxes ls 4 title "7z Deflate", \
   "lz4.log"      using (13):2:($7/1024) with boxes ls 8 title "LZ4 1.10", \

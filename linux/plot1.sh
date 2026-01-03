@@ -9,20 +9,19 @@ set style line 1 lc rgb "black"
 set grid ls 1
 
 # fixed colors for each method
-set style line  1 pt 5 lw 3 lc rgb "dark-red"        # Ppmd
-set style line  2 pt 5 lw 3 lc rgb "dark-chartreuse" # LZMA2
-set style line  3 pt 5 lw 3 lc rgb "navy"            # Bzip2
-set style line  4 pt 5 lw 3 lc rgb "dark-orange"     # Deflate
-set style line  5 pt 7 lw 3 lc rgb "goldenrod"       # Brotli
-set style line  6 pt 7 lw 3 lc rgb "coral"           # FLZMA2
-set style line  7 pt 7 lw 3 lc rgb "royalblue"       # Zstandard
-set style line  8 pt 8 lw 3 lc rgb "red"             # LZ4
-set style line  9 pt 7 lw 3 lc rgb "brown4"          # LZ5
-set style line 10 pt 8 lw 3 lc rgb "dark-violet"     # Lizard-M1
-set style line 11 pt 8 lw 3 lc rgb "green"           # Lizard-M2
-set style line 12 pt 8 lw 3 lc rgb "orange"          # Lizard-M3
-set style line 13 pt 8 lw 3 lc rgb "midnight-blue"   # Lizard-M4
-set style line 14 pt 7 lw 3 lc rgb "gray80"          # LZMA
+set style line  1 pt 5 lw 2 lc rgb "dark-red"     # Ppmd
+set style line  2 pt 5 lw 2 lc rgb "dark-green"   # LZMA2
+set style line  3 pt 5 lw 2 lc rgb "orchid"       # Bzip2
+set style line  4 pt 7 lw 2 lc rgb "web-green"    # Deflate
+set style line  5 pt 7 lw 2 lc rgb "gold"         # Brotli
+set style line  6 pt 7 lw 2 lc rgb "coral"        # FLZMA2
+set style line  7 pt 7 lw 2 lc rgb "royalblue"    # Zstandard
+set style line  8 pt 8 lw 2 lc rgb "light-coral"  # LZ4
+set style line  9 pt 7 lw 2 lc rgb "antiquewhite" # LZ5
+set style line 10 pt 8 lw 2 lc rgb "dark-violet"  # Lizard-M1
+set style line 11 pt 8 lw 2 lc rgb "turquoise"    # Lizard-M2
+set style line 12 pt 8 lw 2 lc rgb "orange"       # Lizard-M3
+set style line 13 pt 8 lw 2 lc rgb "dark-khaki"   # Lizard-M4
 
 # Plot 1: compression ratio vs compression speed
 set output "01_ratio-vs-compr.png"
