@@ -1,7 +1,5 @@
 #!/usr/bin/gnuplot
 
-# method;level;ctime(3);cmem(4);csize(5);dtime(6);dmem(7)
-set datafile separator ";"
 set terminal pngcairo enhanced font "Sans,15" fontscale 1.1 size 1200,1000
 
 set style fill solid 1.00 border lt -1
@@ -27,9 +25,6 @@ set style line 10 pt 8 lc rgb "dark-violet"  # Lizard-M1
 set style line 11 pt 8 lc rgb "turquoise"    # Lizard-M2
 set style line 12 pt 8 lc rgb "orange"       # Lizard-M3
 set style line 13 pt 8 lc rgb "dark-khaki"   # Lizard-M4
-
-uncompressed = 311938580
-MiB = uncompressed / 1024 / 1024
 
 method(name) = \
     name eq "ppmd"       ? 1 : \
@@ -60,42 +55,46 @@ set ylabel "Level"
 set zrange [:]
 set zlabel "MiB/s" offset 3,8.5
 
+# method;level;ctime(3);cmem(4);csize(5);dtime(6);dmem(7)
+set datafile separator ";"
+SIZE = 211938580
+
 # http://www.gnuplot.info/docs_6.0/loc18428.html
 #set view 40,40
 set title "Compression Speed per Level [Silesia corpus]\n7-Zip (z) 25.01 ZS v1.5.7 R4 (x64)"
 set output "03_compr-per-level.png"
 splot \
-  "zstd.log"     using (1):2:(MiB/($3/1024)) with boxes ls 7 title "Zstandard 1.5.7", \
-  "lz5.log"      using (2):2:(MiB/($3/1024)) with boxes ls 9 title "LZ5 1.5", \
-  "lizardM1.log" using (3):2:(MiB/($3/1024)) with boxes ls 10 title "Lizard-M1 2.1", \
-  "lizardM3.log" using (4):2:(MiB/($3/1024)) with boxes ls 12 title "Lizard-M3 2.1", \
-  "lz4.log"      using (5):2:(MiB/($3/1024)) with boxes ls 8 title "LZ4 1.10", \
-  "lizardM2.log" using (6):2:(MiB/($3/1024)) with boxes ls 11 title "Lizard-M2 2.1", \
-  "lizardM4.log" using (7):2:(MiB/($3/1024)) with boxes ls 13 title "Lizard-M4 2.1", \
-  "brotli.log"   using (8):2:(MiB/($3/1024)) with boxes ls 5 title "Brotli 1.2.0", \
-  "deflate.log"  using (9):2:(MiB/($3/1024)) with boxes ls 4 title "7z Deflate", \
-  "lzma2.log"    using (10):2:(MiB/($3/1024)) with boxes ls 2 title "7z LZMA2", \
-  "flzma2.log"   using (11):2:(MiB/($3/1024)) with boxes ls 6 title "FLZMA2 1.0.1", \
-  "ppmd.log"     using (12):2:(MiB/($3/1024)) with boxes ls 1 title "7z Ppmd", \
-  "bzip2.log"    using (13):2:(MiB/($3/1024)) with boxes ls 3 title "7z Bzip2", \
+  "zstd.log"     using (1):2:(SIZE/$3/1024) with boxes ls 7 title "Zstandard 1.5.7", \
+  "lz5.log"      using (2):2:(SIZE/$3/1024) with boxes ls 9 title "LZ5 1.5", \
+  "lizardM1.log" using (3):2:(SIZE/$3/1024) with boxes ls 10 title "Lizard-M1 2.1", \
+  "lizardM3.log" using (4):2:(SIZE/$3/1024) with boxes ls 12 title "Lizard-M3 2.1", \
+  "lz4.log"      using (5):2:(SIZE/$3/1024) with boxes ls 8 title "LZ4 1.10", \
+  "lizardM2.log" using (6):2:(SIZE/$3/1024) with boxes ls 11 title "Lizard-M2 2.1", \
+  "lizardM4.log" using (7):2:(SIZE/$3/1024) with boxes ls 13 title "Lizard-M4 2.1", \
+  "brotli.log"   using (8):2:(SIZE/$3/1024) with boxes ls 5 title "Brotli 1.2.0", \
+  "deflate.log"  using (9):2:(SIZE/$3/1024) with boxes ls 4 title "7z Deflate", \
+  "lzma2.log"    using (10):2:(SIZE/$3/1024) with boxes ls 2 title "7z LZMA2", \
+  "flzma2.log"   using (11):2:(SIZE/$3/1024) with boxes ls 6 title "FLZMA2 1.0.1", \
+  "ppmd.log"     using (12):2:(SIZE/$3/1024) with boxes ls 1 title "7z Ppmd", \
+  "bzip2.log"    using (13):2:(SIZE/$3/1024) with boxes ls 3 title "7z Bzip2", \
 
 # method;level;ctime(3);cmem(4);csize(5);dtime(6);dmem(7)
 set title "Decompression Speed per Level [Silesia corpus]\n7-Zip (z) 25.01 ZS v1.5.7 R4 (x64)"
 set output "04_decompr-per-level.png"
 splot \
-  "lizardM1.log" using (1):2:(MiB/($6/1024)) with boxes ls 10 title "Lizard-M1 2.1", \
-  "lz4.log"      using (2):2:(MiB/($6/1024)) with boxes ls 8 title "LZ4 1.10", \
-  "lizardM2.log" using (3):2:(MiB/($6/1024)) with boxes ls 11 title "Lizard-M2 2.1", \
-  "lizardM3.log" using (4):2:(MiB/($6/1024)) with boxes ls 12 title "Lizard-M3 2.1", \
-  "lizardM4.log" using (5):2:(MiB/($6/1024)) with boxes ls 13 title "Lizard-M4 2.1", \
-  "zstd.log"     using (6):2:(MiB/($6/1024)) with boxes ls 7 title "Zstandard 1.5.7", \
-  "lz5.log"      using (7):2:(MiB/($6/1024)) with boxes ls 9 title "LZ5 1.5", \
-  "brotli.log"   using (8):2:(MiB/($6/1024)) with boxes ls 5 title "Brotli 1.2.0", \
-  "deflate.log"  using (9):2:(MiB/($6/1024)) with boxes ls 4 title "7z Deflate", \
-  "lzma2.log"    using (10):2:(MiB/($6/1024)) with boxes ls 2 title "7z LZMA2", \
-  "flzma2.log"   using (11):2:(MiB/($6/1024)) with boxes ls 6 title "FLZMA2 1.0.1", \
-  "bzip2.log"    using (12):2:(MiB/($6/1024)) with boxes ls 3 title "7z Bzip2", \
-  "ppmd.log"     using (13):2:(MiB/($6/1024)) with boxes ls 1 title "7z Ppmd", \
+  "lizardM1.log" using (1):2:(SIZE/$6/1024) with boxes ls 10 title "Lizard-M1 2.1", \
+  "lz4.log"      using (2):2:(SIZE/$6/1024) with boxes ls 8 title "LZ4 1.10", \
+  "lizardM2.log" using (3):2:(SIZE/$6/1024) with boxes ls 11 title "Lizard-M2 2.1", \
+  "lizardM3.log" using (4):2:(SIZE/$6/1024) with boxes ls 12 title "Lizard-M3 2.1", \
+  "lizardM4.log" using (5):2:(SIZE/$6/1024) with boxes ls 13 title "Lizard-M4 2.1", \
+  "zstd.log"     using (6):2:(SIZE/$6/1024) with boxes ls 7 title "Zstandard 1.5.7", \
+  "lz5.log"      using (7):2:(SIZE/$6/1024) with boxes ls 9 title "LZ5 1.5", \
+  "brotli.log"   using (8):2:(SIZE/$6/1024) with boxes ls 5 title "Brotli 1.2.0", \
+  "deflate.log"  using (9):2:(SIZE/$6/1024) with boxes ls 4 title "7z Deflate", \
+  "lzma2.log"    using (10):2:(SIZE/$6/1024) with boxes ls 2 title "7z LZMA2", \
+  "flzma2.log"   using (11):2:(SIZE/$6/1024) with boxes ls 6 title "FLZMA2 1.0.1", \
+  "bzip2.log"    using (12):2:(SIZE/$6/1024) with boxes ls 3 title "7z Bzip2", \
+  "ppmd.log"     using (13):2:(SIZE/$6/1024) with boxes ls 1 title "7z Ppmd", \
 
 # MiB/s
 #set zrange [0:2000]
